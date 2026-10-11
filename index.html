@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STARS ARE BLIND — Paris Hilton Daily Quotes</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- html2canvas per snapshot dell'immagine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    :root {
+      --bg-color: #fdfbf7;
+      --card-bg: #ffffff;
+      --text-main: #111111;
+      --text-muted: #777777;
+      --accent-pink: #ff2a85;
+      --border-color: #eae5dd;
+      --shadow: 0 20px 40px rgba(0,0,0,0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5rem 1rem;
+      overflow-x: hidden;
+    }
+
+    /* Overlay Effetto Pellicola Grain */
+    .grain-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.035;
+      z-index: 99;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .date-display {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-pink);
+      letter-spacing: 0.25em;
+    }
+
+    /* Content Card */
+    .card-container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .quote-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      text-align: center;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 420px;
+    }
+
+    .source-badge {
+      display: inline-block;
+      padding: 0.4rem 1.1rem;
+      border-radius: 50px;
+      background-color: rgba(255, 42, 133, 0.08);
+      color: var(--accent-pink);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2.2rem;
+    }
+
+    .quote-text {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 2.2rem;
+      line-height: 1.35;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-main);
+      margin-bottom: 2.5rem;
+    }
+
+    .author-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .citation-origin {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      border-color: var(--text-main);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--text-main);
+      color: #ffffff;
+      border-color: var(--text-main);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-pink);
+      border-color: var(--accent-pink);
+    }
+
+    .btn.active {
+      background: rgba(255, 42, 133, 0.1);
+      border-color: var(--accent-pink);
+      color: var(--accent-pink);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      background: var(--text-main);
+      color: #ffffff;
+      padding: 0.8rem 1.6rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    footer {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .brand-title {
+        font-size: 1.8rem;
+      }
+      .quote-text {
+        font-size: 1.6rem;
+      }
+      .quote-card {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain-overlay"></div>
+
+  <header>
+    <div class="brand-title">STARS ARE BLIND</div>
+    <div class="date-display" id="today-date">OCTOBER 11, 2026</div>
+  </header>
+
+  <main class="card-container">
+    <div class="quote-card" id="quote-card">
+      <div class="source-badge" id="source-badge">INTERVIEW</div>
+      <blockquote class="quote-text" id="quote-text">
+        "That's hot."
+      </blockquote>
+      <div class="author-name">PARIS HILTON</div>
+      <div class="citation-origin" id="citation-origin">The Simple Life (S01E01)</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-primary" id="btn-daily">Quote del Giorno</button>
+      <button class="btn" id="btn-random">Random</button>
+      <button class="btn" id="btn-audio">🎵 Audio Chords</button>
+      <button class="btn" id="btn-share">Condividi</button>
+      <button class="btn" id="btn-capture">Salva Card</button>
+    </div>
+  </main>
+
+  <footer>
+    Paris Hilton Archive — Editorial Edition
+  </footer>
+
+  <div class="toast" id="toast">Copiato negli appunti!</div>
+
+  <script>
+    // Database Citazioni di Paris Hilton con Fonti
+    const quotesDatabase = [
+      {
+        quote: "That's hot.",
+        type: "TV Show",
+        source: "The Simple Life (S01E01)"
+      },
+      {
+        quote: "Walmarts... do they sell like wall stuff?",
+        type: "TV Show",
+        source: "The Simple Life (S01E02)"
+      },
+      {
+        quote: "I don't mind spending some time just hanging out with you, 'cause I don't mind if we do nothing at all.",
+        type: "Song",
+        source: "Stars Are Blind (2006)"
+      },
+      {
+        quote: "Always dress like you're going to see your worst enemy.",
+        type: "Memoir",
+        source: "Paris: The Memoir (2023)"
+      },
+      {
+        quote: "Some girls are just born with glitter in their veins.",
+        type: "Interview",
+        source: "Late Show with David Letterman"
+      },
+      {
+        quote: "Life is short. Live it like you're on vacation.",
+        type: "Book",
+        source: "Confessions of an Heiress (2004)"
+      },
+      {
+        quote: "I'm not a dumb blonde. I'm just really good at pretending to be one.",
+        type: "Documentary",
+        source: "This Is Paris (2020)"
+      },
+      {
+        quote: "The only rule is don't be boring and dress cute wherever you go.",
+        type: "Interview",
+        source: "Vogue Magazine (2007)"
+      }
+    ];
+
+    // Data Odierna
+    const today = new Date();
+    const options = { year: 'numeric', month: 'LONG', day: 'numeric' };
+    document.getElementById('today-date').innerText = today.toLocaleDateString('en-US', options).toUpperCase();
+
+    // Calcolo Indice Giornaliero
+    function getDailyIndex() {
+      const startOfYear = new Date(today.getFullYear(), 0, 0);
+      const diff = today - startOfYear;
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+      return dayOfYear % quotesDatabase.length;
+    }
+
+    let currentIndex = getDailyIndex();
+
+    function renderQuote(index) {
+      const item = quotesDatabase[index];
+      const card = document.getElementById('quote-card');
+      
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(8px)';
+
+      setTimeout(() => {
+        document.getElementById('quote-text').innerText = `"${item.quote}"`;
+        document.getElementById('source-badge').innerText = item.type;
+        document.getElementById('citation-origin').innerText = item.source;
+        
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 200);
+    }
+
+    renderQuote(currentIndex);
+
+    // Eventi Pulsanti
+    document.getElementById('btn-daily').addEventListener('click', () => {
+      currentIndex = getDailyIndex();
+      renderQuote(currentIndex);
+    });
+
+    document.getElementById('btn-random').addEventListener('click', () => {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * quotesDatabase.length);
+      } while (newIndex === currentIndex);
+      currentIndex = newIndex;
+      renderQuote(currentIndex);
+    });
+
+    // Copia Negli Appunti
+    document.getElementById('btn-share').addEventListener('click', () => {
+      const item = quotesDatabase[currentIndex];
+      const textToCopy = `"${item.quote}" — Paris Hilton (${item.source})`;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      });
+    });
+
+    // Download Immagine Card
+    document.getElementById('btn-capture').addEventListener('click', () => {
+      const card = document.getElementById('quote-card');
+      html2canvas(card, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `stars-are-blind-paris-hilton.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
+
+    // Web Audio Synthesizer per gli Accordi di "Stars Are Blind" (D Major - Bm - G - A)
+    let audioCtx = null;
+    let isPlaying = false;
+    let synthInterval = null;
+
+    const chords = [
+      [293.66, 369.99, 440.00], // D Major
+      [246.94, 293.66, 369.99], // B Minor
+      [196.00, 246.94, 293.66], // G Major
+      [220.00, 277.18, 329.63]  // A Major
+    ];
+
+    function playChordProgression() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      let chordStep = 0;
+      
+      synthInterval = setInterval(() => {
+        if (!isPlaying) return;
+        
+        const now = audioCtx.currentTime;
+        const currentNotes = chords[chordStep];
+        
+        currentNotes.forEach(freq => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+          
+          gain.gain.setValueAtTime(0, now);
+          gain.gain.linearRampToValueAtTime(0.04, now + 0.3);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+          
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          
+          osc.start(now);
+          osc.stop(now + 2.0);
+        });
+        
+        chordStep = (chordStep + 1) % chords.length;
+      }, 2000);
+    }
+
+    document.getElementById('btn-audio').addEventListener('click', function() {
+      const btn = this;
+      if (!isPlaying) {
+        isPlaying = true;
+        btn.classList.add('active');
+        playChordProgression();
+      } else {
+        isPlaying = false;
+        btn.classList.remove('active');
+        if (synthInterval) clearInterval(synthInterval);
+      }
+    });
+  </script>
+</body>
+</html>
